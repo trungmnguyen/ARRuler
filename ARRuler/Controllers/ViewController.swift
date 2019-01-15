@@ -99,8 +99,24 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         
         let distance = sqrt(pow(dx,2) + pow(dy,2) + pow(dz,2))
         
-        
+        updateText(text: "\((distance*100).rounded()) cm",atPosition: end.position)
     }
     
+    func updateText(text: String, atPosition: SCNVector3){
+        
+        let textGeometry = SCNText(string: text, extrusionDepth: 0.5)
+    
+        textGeometry.firstMaterial?.diffuse.contents = UIColor.black
+        textGeometry.font = UIFont(name: "Cuckoo", size: 10)
+        let textNode = SCNNode(geometry: textGeometry)
+        
+//        textNode.position = atPosition
+        textNode.position = SCNVector3(atPosition.x,atPosition.y,atPosition.z)
+        
+        textNode.scale = SCNVector3(0.005, 0.005, 0.005)
+        sceneView.scene.rootNode.addChildNode(textNode)
+        
+        
+    }
     
 }
